@@ -88,7 +88,7 @@ app.layout = html.Div([
             )
         ]
     ),
-    # Currency pair text input, within its own div.
+
     html.Div(
         # The input object itself
         ["Input Currency: ", dcc.Input(
@@ -149,7 +149,7 @@ def update_candlestick_graph(n_clicks, currency_string, what_to_show,
                              edt_date, edt_hour, edt_minute, edt_second):
     # n_clicks doesn't
     # get used, we only include it for the dependency.
-
+    print(what_to_show)
     if any([i is None for i in [edt_date, edt_hour, edt_minute, edt_second]]):
         endDateTime = ''
     else:
@@ -157,7 +157,7 @@ def update_candlestick_graph(n_clicks, currency_string, what_to_show,
 
     # First things first -- what currency pair history do you want to fetch?
     # Define it as a contract object!
-    contract = Contract()
+    contract = Contract(EUR.USD)
     contract.symbol   = currency_string.split(".")[0]
     contract.secType  = 'CASH'
     contract.exchange = 'IDEALPRO' # 'IDEALPRO' is the currency exchange.
@@ -175,28 +175,28 @@ def update_candlestick_graph(n_clicks, currency_string, what_to_show,
     # Some default values are provided below to help with your testing.
     # Don't forget -- you'll need to update the signature in this callback
     #   function to include your new vars!
-    # cph = fetch_historical_data(
-    #     contract=contract,
-    #     endDateTime='',
-    #     durationStr='30 D',       # <-- make a reactive input
-    #     barSizeSetting='1 hour',  # <-- make a reactive input
-    #     whatToShow=what_to_show,
-    #     useRTH=True               # <-- make a reactive input
-    # )
-    # # # Make the candlestick figure
-    # fig = go.Figure(
-    #     data=[
-    #         go.Candlestick(
-    #             x=cph['date'],
-    #             open=cph['open'],
-    #             high=cph['high'],
-    #             low=cph['low'],
-    #             close=cph['close']
-    #         )
-    #     ]
-    # )
-    # # # Give the candlestick figure a title
-    # fig.update_layout(title=('Exchange Rate: ' + currency_string))
+    cph = fetch_historical_data(
+        contract=contract,
+        endDateTime='',
+        durationStr='30 D',       # <-- make a reactive input
+        barSizeSetting='1 hour',  # <-- make a reactive input
+        whatToShow=what_to_show,
+        useRTH=True               # <-- make a reactive input
+    )
+    # # Make the candlestick figure
+    fig = go.Figure(
+        data=[
+            go.Candlestick(
+                x=cph['date'],
+                open=cph['open'],
+                high=cph['high'],
+                low=cph['low'],
+                close=cph['close']
+            )
+        ]
+    )
+    # # Give the candlestick figure a title
+    fig.update_layout(title=('Exchange Rate: ' + currency_string))
     ############################################################################
     ############################################################################
 
@@ -204,20 +204,20 @@ def update_candlestick_graph(n_clicks, currency_string, what_to_show,
     ############################################################################
     # This block returns a candlestick plot of apple stock prices. You'll need
     # to delete or comment out this block and use your currency prices instead.
-    df = pd.read_csv(
-        'https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv'
-    )
-    fig = go.Figure(
-        data=[
-            go.Candlestick(
-                x=df['Date'],
-                open=df['AAPL.Open'],
-                high=df['AAPL.High'],
-                low=df['AAPL.Low'],
-                close=df['AAPL.Close']
-            )
-        ]
-    )
+    # df = pd.read_csv(
+    #     'https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv'
+    # )
+    # fig = go.Figure(
+    #     data=[
+    #         go.Candlestick(
+    #             x=df['Date'],
+    #             open=df['AAPL.Open'],
+    #             high=df['AAPL.High'],
+    #             low=df['AAPL.Low'],
+    #             close=df['AAPL.Close']
+    #         )
+    #     ]
+    # )
 
     currency_string = 'default Apple price data fetch'
     ############################################################################

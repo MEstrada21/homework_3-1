@@ -10,7 +10,7 @@ from fintech_ibkr import *
 value = "EUR.USD" # This is what your text input looks like on your app
 
 # Create a contract object
-contract = Contract()
+contract = Contract("EUR.USD")
 contract.symbol = value.split(".")[0]
 contract.secType  = 'CASH'
 contract.exchange = 'IDEALPRO'  # 'IDEALPRO' is the currency exchange.
@@ -23,3 +23,4 @@ historical_data = fetch_historical_data(contract)
 print(historical_data)
 
 # This script is an excellent place for scratch work as you figure this out.
+# historical_data.__str__().split(", ")
