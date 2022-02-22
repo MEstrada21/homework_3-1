@@ -157,7 +157,7 @@ def update_candlestick_graph(n_clicks, currency_string, what_to_show,
 
     # First things first -- what currency pair history do you want to fetch?
     # Define it as a contract object!
-    contract = Contract(EUR.USD)
+    contract = Contract("AUD.CAD")
     contract.symbol   = currency_string.split(".")[0]
     contract.secType  = 'CASH'
     contract.exchange = 'IDEALPRO' # 'IDEALPRO' is the currency exchange.

@@ -53,7 +53,7 @@ class ibkr_app(EWrapper, EClient):
         #   so that it's accepted by the plotly candlestick function.
         # Take a look at candlestick_plot.ipynb for some help!
         # assign the dataframe to self.historical_data.
-        # print(reqId, bar)
+
         row = pd.DataFrame(
             {'date': [bar.date],
              'open': [bar.open],
@@ -63,7 +63,7 @@ class ibkr_app(EWrapper, EClient):
              }
         )
         self.historical_data = pd.concat([self.historical_data, row], ignore_index=True)
-
+        print(reqId, bar)
     def historicalDataEnd(self, reqId: int, start: str, end: str):
         # super().historicalDataEnd(reqId, start, end)
         print("HistoricalDataEnd. ReqId:", reqId, "from", start, "to", end)
